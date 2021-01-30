@@ -1,0 +1,80 @@
+inst() {
+    loc=$(which $1)
+    if [[ $loc == *"not found"* ]]; then
+        brew install $1
+    fi
+}
+
+deps() {
+    inst yarn
+    inst typescript
+    yarn init
+    yarn add express
+    yarn add tslint --dev
+    yarn add typescript --dev
+    yarn add @types/express --dev
+}
+
+ts() {
+    touch tsconfig.json
+    # tsc --init
+    {
+        echo '{'
+        echo '    "compilerOptions": {'
+        echo '        "module": "commonjs",'
+        echo '        "esModuleInterop": true,'
+        echo '        "target": "es6",'
+        echo '        "moduleResolution": "node",'
+        echo '        "sourceMap": true,'
+        echo '        "outDir": "dist"'
+        echo '    },'
+        echo '    "lib": ["es2015"]'
+        echo '}'
+    } >> tsconfig.json
+
+    ./node_modules/.bin/tslint --init
+    {
+        echo '{'
+        echo '    "defaultSeverity": "error",'
+        echo '    "extends": ["tslint:recommended"],'
+        echo '    "jsRules": {},'
+        echo '    "rules": {'
+        echo '        "no-console": false'
+        echo '    },'
+        echo '    "rulesDirectory": []'
+        echo '}'
+    } > tslint.json
+}
+
+src() {
+    mkdir src
+    touch src/app.ts
+
+    {
+        printf "import express from 'express';\n\n"
+        echo "const app = express();"
+        printf "const port = 3000;\n\n"
+        echo "app.get('/', (req, res) => {"
+        echo "    res.send('The sedulous hyena ate the antelope!');"
+        printf "});\n\n"
+        echo "app.listen(port, () => {"
+        echo "    return console.info(`Ready on port ${port}`);"
+        echo '}).on("error", err => {'
+        echo "    return console.error(err);"
+        echo "});" 
+    } >> src/app.ts
+}
+
+end() {
+    printf '\n\n****** COMPLETE ******\n\n'
+    printf "ADD TO package.json:\n\n"
+    echo '"scripts": {'
+    echo '    "start": "tsc && node dist/app.js",'
+    echo '    "test": "echo \"Error: no test specified\" && exit 1"'
+    echo ' }'
+}
+
+deps
+ts
+src
+end
