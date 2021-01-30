@@ -4,7 +4,9 @@ Creates a new node/express/typescript project with boilerplate
 Automates project setup instructions found here: 
 https://www.digitalocean.com/community/tutorials/setting-up-a-node-project-with-typescript
 
-Uses yarn, whether you like it or not.
+## Right now
+- For unix-based systems
+- Uses yarn
 
 ## Install
 
