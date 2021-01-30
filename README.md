@@ -1,10 +1,10 @@
 # auto-node-express-ts
-Creates a new node/express/typescript project with boilerplate
+Creates a new node/express/typescript project with boilerplate.
 
-Automates project setup instructions found here: 
+Automates project setup instructions found here:  
 https://www.digitalocean.com/community/tutorials/setting-up-a-node-project-with-typescript
 
-## Right now
+### Right now
 - For unix-based systems
 - Uses yarn
 
